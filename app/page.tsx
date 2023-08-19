@@ -21,7 +21,7 @@ export default function Home() {
   // });
 
   const [allCars, setAllCars] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // Search states
   const [manufacturer, setManufacturer] = useState("");
@@ -82,37 +82,34 @@ export default function Home() {
             />
           </div>
         </div>
+        {loading ? (
+          <div className="mt-16 w-full flex-center">
+            <h2 className="text-black font-bold">Loading...</h2>
+          </div>
+        ) : (
+          <div>
+            {allCars.length > 0 ? (
+              <section>
+                <div className="home__cars-wrapper">
+                  {allCars?.map((car) => (
+                    <CarCard car={car} />
+                  ))}
+                </div>
 
-        {allCars.length > 0 ? (
-          <section>
-            <div className="home__cars-wrapper">
-              {allCars?.map((car) => (
-                <CarCard car={car} />
-              ))}
-            </div>
-
-            {loading && (
-              <div className="mt-16 w-full flex-center">
-                <Image
-                  src="/loader.svg"
-                  alt="loader"
-                  width={50}
-                  height={50}
-                  className="object-contain"
+                <ShowMore
+                  pageNumber={limit / 10}
+                  isNext={limit > allCars.length}
+                  setLimit={setLimit}
                 />
+              </section>
+            ) : (
+              <div className="home__error-container">
+                <h2 className="text-black text-xl font-bold">
+                  Oops, no results
+                </h2>
+                <p>{allCars?.message}</p>
               </div>
             )}
-
-            <ShowMore
-              pageNumber={limit / 10}
-              isNext={limit > allCars.length}
-              setLimit={setLimit}
-            />
-          </section>
-        ) : (
-          <div className="home__error-container">
-            <h2 className="text-black text-xl font-bold">Oops, no results</h2>
-            <p>{allCars?.message}</p>
           </div>
         )}
       </div>
