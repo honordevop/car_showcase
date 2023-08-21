@@ -15,9 +15,6 @@ const Navbar = () => {
             height={18}
             className="object-contain shrink"
           />
-          <span className="text-black font-extrabold text-[2.8rem] ">
-            OrnorCar
-          </span>
         </Link>
 
         <CustomButton
